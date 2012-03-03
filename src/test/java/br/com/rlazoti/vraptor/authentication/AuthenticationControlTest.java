@@ -34,7 +34,7 @@ public class AuthenticationControlTest {
   public void testCreateSession() {
     authenticationControl.createSession(object);
 
-    assertTrue(authenticationControl.isSessionCreated());
+    assertTrue(authenticationControl.isThereAnObjectInTheSession());
     assertEquals(object, authenticationControl.getObjectInTheSession());
   }
 
@@ -43,7 +43,7 @@ public class AuthenticationControlTest {
     authenticationControl.createSession(object);
     authenticationControl.destroySession();
 
-    assertFalse(authenticationControl.isSessionCreated());
+    assertFalse(authenticationControl.isThereAnObjectInTheSession());
     assertNull(authenticationControl.getObjectInTheSession());
   }
 

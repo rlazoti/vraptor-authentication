@@ -35,7 +35,7 @@ public class AuthenticationControl implements Serializable {
     logger.debug("Session destroyed");
   }
 
-  public boolean isSessionCreated() {
+  public boolean isThereAnObjectInTheSession() {
     return object != null;
   }
 
