@@ -43,6 +43,10 @@ public class LoginHandler implements StereotypeHandler {
     return methodOfLoginAction;
   }
 
+  public boolean isThereALoginActionStored() {
+    return classOfLoginController != null && methodOfLoginAction != null;
+  }
+
   private void searchForLoginActionAndStore(Class<?> resource, Method method) {
     if (method.isAnnotationPresent(Login.class)) {
       ifThereAreMoreThanOneLoginActionThrowAnException();
@@ -58,12 +62,14 @@ public class LoginHandler implements StereotypeHandler {
 
   private void ifThereAreMoreThanOneLoginActionThrowAnException() {
     if (classOfLoginController != null && methodOfLoginAction != null) {
+      storeTheLoginAction(null, null);
       throw new VraptorAuthenticationException("There are more than one method with the @Login annotation.");
     }
   }
 
   private void ifThereIsNotAnyLoginActionThrowAnException() {
     if (classOfLoginController == null || methodOfLoginAction == null) {
+      storeTheLoginAction(null, null);
       throw new VraptorAuthenticationException("There isn't any method with the @Login annotation.");
     }
   }

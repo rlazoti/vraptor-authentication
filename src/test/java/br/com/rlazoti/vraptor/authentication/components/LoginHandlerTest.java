@@ -1,6 +1,7 @@
 package br.com.rlazoti.vraptor.authentication.components;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -63,6 +64,7 @@ public class LoginHandlerTest {
   public void testHandleAValidResource() throws SecurityException, NoSuchMethodException {
     handler.handle(ControllerWithLogin.class);
 
+    assertTrue(handler.isThereALoginActionStored());
     assertEquals(ControllerWithLogin.class, handler.getClassOfController());
     assertEquals(ControllerWithLogin.class.getMethod("login", null), handler.getMethodOfAction());
   }
