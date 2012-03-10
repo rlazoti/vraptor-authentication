@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication.interceptors;
+package br.com.rodrigolazoti.vraptor.authentication.interceptors;
 
 import net.vidageek.mirror.dsl.Mirror;
 import br.com.caelum.vraptor.InterceptionException;
@@ -8,10 +8,10 @@ import br.com.caelum.vraptor.core.InterceptorStack;
 import br.com.caelum.vraptor.interceptor.Interceptor;
 import br.com.caelum.vraptor.resource.ResourceMethod;
 import br.com.caelum.vraptor.view.Results;
-import br.com.rlazoti.vraptor.authentication.AuthenticationControl;
-import br.com.rlazoti.vraptor.authentication.annotations.Login;
-import br.com.rlazoti.vraptor.authentication.annotations.Public;
-import br.com.rlazoti.vraptor.authentication.components.LoginHandler;
+import br.com.rodrigolazoti.vraptor.authentication.AuthenticationControl;
+import br.com.rodrigolazoti.vraptor.authentication.annotations.Login;
+import br.com.rodrigolazoti.vraptor.authentication.annotations.Public;
+import br.com.rodrigolazoti.vraptor.authentication.components.LoginHandler;
 
 @Intercepts
 public class AuthenticationInterceptor implements Interceptor {

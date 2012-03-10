@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication.components;
+package br.com.rodrigolazoti.vraptor.authentication.components;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.vraptor.Resource;
-import br.com.rlazoti.vraptor.authentication.annotations.Login;
+import br.com.rodrigolazoti.vraptor.authentication.annotations.Login;
+import br.com.rodrigolazoti.vraptor.authentication.components.LoginHandler;
+import br.com.rodrigolazoti.vraptor.authentication.components.VraptorAuthenticationException;
 
 public class LoginHandlerTest {
 

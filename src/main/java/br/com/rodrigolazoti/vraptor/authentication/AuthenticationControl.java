@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication;
+package br.com.rodrigolazoti.vraptor.authentication;
 
 import java.io.Serializable;
 

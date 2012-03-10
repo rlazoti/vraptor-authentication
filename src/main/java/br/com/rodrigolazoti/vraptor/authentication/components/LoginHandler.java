@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication.components;
+package br.com.rodrigolazoti.vraptor.authentication.components;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -10,7 +10,7 @@ import br.com.caelum.vraptor.Resource;
 import br.com.caelum.vraptor.ioc.ApplicationScoped;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.StereotypeHandler;
-import br.com.rlazoti.vraptor.authentication.annotations.Login;
+import br.com.rodrigolazoti.vraptor.authentication.annotations.Login;
 
 @ApplicationScoped
 @Component

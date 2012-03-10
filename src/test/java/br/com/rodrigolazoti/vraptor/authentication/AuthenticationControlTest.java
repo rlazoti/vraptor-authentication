@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication;
+package br.com.rodrigolazoti.vraptor.authentication;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import br.com.rodrigolazoti.vraptor.authentication.AuthenticationControl;
 
 public class AuthenticationControlTest {
 

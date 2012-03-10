@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication.annotations;
+package br.com.rodrigolazoti.vraptor.authentication.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

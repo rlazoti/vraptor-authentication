@@ -1,4 +1,4 @@
-package br.com.rlazoti.vraptor.authentication.components;
+package br.com.rodrigolazoti.vraptor.authentication.components;
 
 public class VraptorAuthenticationException extends RuntimeException {
   
