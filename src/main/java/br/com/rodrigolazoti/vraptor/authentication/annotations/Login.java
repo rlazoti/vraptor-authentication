@@ -9,4 +9,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Login {
 
+  public enum UnauthorizedAction {
+    REDIRECT_TO_LOGIN,
+    RETURN_UNAUTHORIZED_STATUS
+  }
+  public UnauthorizedAction unauthorizedAction() default UnauthorizedAction.REDIRECT_TO_LOGIN;
+
 }

@@ -1,5 +1,9 @@
 package br.com.rodrigolazoti.vraptor.authentication.interceptors;
 
+import java.lang.reflect.Method;
+
+import javax.servlet.http.HttpServletResponse;
+
 import net.vidageek.mirror.dsl.Mirror;
 import br.com.caelum.vraptor.InterceptionException;
 import br.com.caelum.vraptor.Intercepts;
@@ -34,8 +38,17 @@ public class AuthenticationInterceptor implements Interceptor {
   @Override
   public void intercept(InterceptorStack stack, ResourceMethod method, Object object) throws InterceptionException {
     if (!authenticationControl.isThereAnObjectInTheSession() && loginHandler.isThereALoginActionStored()) {
-      Object instance = result.use(Results.logic()).redirectTo(loginHandler.getClassOfController());
-      new Mirror().on(instance).invoke().method(loginHandler.getMethodOfAction()).withoutArgs();
+      Method methodOfAction = loginHandler.getMethodOfAction();
+      switch (methodOfAction.getAnnotation(Login.class).unauthorizedAction()) {
+        case RETURN_UNAUTHORIZED_STATUS:
+          result.use(Results.http()).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+          break;
+        case REDIRECT_TO_LOGIN:
+        default:
+          Object instance = result.use(Results.logic()).redirectTo(loginHandler.getClassOfController());
+          new Mirror().on(instance).invoke().method(loginHandler.getMethodOfAction()).withoutArgs();
+          break;
+      }
     }
     else {
       stack.next(method, object);
