@@ -22,7 +22,7 @@ The VRaptor-Authentication will be find in all classes with the @Resource annota
 
 After that, for every request, it will check if there is a session created.
 
-If the session wasn't created, the request will be redirected to the method with the @Login annotation. 
+If the session wasn't created, the request will be redirected to the method with the @Login annotation or the request will be return a 401 (unauthorized) http status.
 
 The VRaptor-Authentication won't check the request to methods that have the @Public annotation.
 
@@ -48,7 +48,7 @@ If the Vraptor-Authentication locate more than one method with @Login annotation
 
 You can define methods that have public access with the @Public annotation.
 
-In others words, a method with @Public annotation is accessible without the need for a session.
+In other words, a method with @Public annotation is accessible without the need for a session.
  
     @Resource
     public class WelcomeController {
@@ -64,6 +64,40 @@ In others words, a method with @Public annotation is accessible without the need
         }
         
     }
+
+You can define two ways to treat an unauthorized request.
+
+
+The first possibility (Default) is redirect the request to the @public method, and if you want this behavior you can add the value REDIRECT_TO_LOGIN to the attribute unauthorizedAction in the @Login annotation.
+
+Remember that's the default behavior, so, if you don't add the unauthorizedAction attribute in the @Login annotation, it'll be automatic defined to REDIRECT_TO_LOGIN.
+
+    @Resource
+    public class WelcomeController {
+      
+        @Login(unauthorizedAction = UnauthorizedAction.REDIRECT_TO_LOGIN)
+        @Get("/login")
+        public void login() {
+        }
+
+    }
+
+
+And the second possibility is return a 401 (unauthorized) status.
+To do it, you just need to add the value RETURN_UNAUTHORIZED_STATUS to the attribute unauthorizedAction in the @Login annotation.
+
+    @Resource
+    public class WelcomeController {
+      
+        @Login(unauthorizedAction = UnauthorizedAction.RETURN_UNAUTHORIZED_STATUS)
+        @Get("/login")
+        public void login() {
+        }
+
+    }
+
+
+
 
 Logic
 -----
