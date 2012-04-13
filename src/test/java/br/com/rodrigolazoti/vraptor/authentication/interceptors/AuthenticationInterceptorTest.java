@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Method;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
@@ -23,12 +24,13 @@ import br.com.caelum.vraptor.resource.DefaultResourceClass;
 import br.com.caelum.vraptor.resource.DefaultResourceMethod;
 import br.com.caelum.vraptor.resource.ResourceMethod;
 import br.com.caelum.vraptor.util.test.MockResult;
+import br.com.caelum.vraptor.view.HttpResult;
 import br.com.caelum.vraptor.view.LogicResult;
 import br.com.caelum.vraptor.view.Results;
 import br.com.rodrigolazoti.vraptor.authentication.AuthenticationControl;
 import br.com.rodrigolazoti.vraptor.authentication.annotations.Login;
+import br.com.rodrigolazoti.vraptor.authentication.annotations.Login.UnauthorizedAction;
 import br.com.rodrigolazoti.vraptor.authentication.components.LoginHandler;
-import br.com.rodrigolazoti.vraptor.authentication.interceptors.AuthenticationInterceptor;
 
 public class AuthenticationInterceptorTest {
 
@@ -57,17 +59,27 @@ public class AuthenticationInterceptorTest {
 
   };
 
+  @Resource
+  public class OtherAuthenticationController {
+
+    @Get
+    public void index() {
+    }
+
+    @Login(unauthorizedAction = UnauthorizedAction.RETURN_UNAUTHORIZED_STATUS)
+    @Get
+    public void login() {
+    }
+
+  };
+
   @Before
   public void setUp() throws Exception {
     result = mock(MockResult.class);
     stack = mock(InterceptorStack.class);
     method = mock(ResourceMethod.class);
-
-    handler = new LoginHandler();
-    handler.handle(AuthenticationController.class);
-
-    authenticationControl = new AuthenticationControl(mock(HttpSession.class));
-    interceptor = new AuthenticationInterceptor(authenticationControl, handler, result);
+    
+    initializeTheInterceptorUsingAuthenticationController();
   }
 
   @Test
@@ -78,11 +90,22 @@ public class AuthenticationInterceptorTest {
   }
 
   @Test
-  public void rejectARequestWithoutASession() throws Exception {
+  public void rejectARequestWithoutASessionAndRedirectToLogin() throws Exception {
     AuthenticationController controller = mockAuthenticationController();
+
     givenThereIsNotASession();
     whenInterceptOccurs();
     verify(controller).login();
+  }
+
+  @Test
+  public void rejectARequestWithoutASessionAndReturnAnUnauthorizedStatus() throws Exception {
+    HttpResult httpResult = mockHttpResult();
+
+    initializeTheInterceptorUsingOtherAuthenticationController();
+    givenThereIsNotASession();
+    whenInterceptOccurs();
+    verify(httpResult).sendError(HttpServletResponse.SC_UNAUTHORIZED);
   }
 
   @Test
@@ -118,6 +141,28 @@ public class AuthenticationInterceptorTest {
     when(result.use(Results.logic()).redirectTo(AuthenticationController.class)).thenReturn(controller);
 
     return controller;
+  }
+
+  private HttpResult mockHttpResult() {
+    HttpResult httpResult = mock(HttpResult.class);
+    when(result.use(Results.http())).thenReturn(httpResult);
+    
+    return httpResult;
+  }
+
+  private void initializeTheInterceptorUsingAuthenticationController() {
+    handler = new LoginHandler();
+    handler.handle(AuthenticationController.class);
+    
+    authenticationControl = new AuthenticationControl(mock(HttpSession.class));
+    interceptor = new AuthenticationInterceptor(authenticationControl, handler, result);
+  }
+  
+  private void initializeTheInterceptorUsingOtherAuthenticationController() {
+    handler = new LoginHandler();
+    handler.handle(OtherAuthenticationController.class);
+    authenticationControl = new AuthenticationControl(mock(HttpSession.class));
+    interceptor = new AuthenticationInterceptor(authenticationControl, handler, result);
   }
 
   private void givenThereIsAnObjectInTheSession() {

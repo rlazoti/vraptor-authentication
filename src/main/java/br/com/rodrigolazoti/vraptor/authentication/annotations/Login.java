@@ -13,6 +13,7 @@ public @interface Login {
     REDIRECT_TO_LOGIN,
     RETURN_UNAUTHORIZED_STATUS
   }
+
   public UnauthorizedAction unauthorizedAction() default UnauthorizedAction.REDIRECT_TO_LOGIN;
 
 }

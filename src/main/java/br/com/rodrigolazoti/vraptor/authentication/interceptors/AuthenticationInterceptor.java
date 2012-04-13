@@ -39,10 +39,12 @@ public class AuthenticationInterceptor implements Interceptor {
   public void intercept(InterceptorStack stack, ResourceMethod method, Object object) throws InterceptionException {
     if (!authenticationControl.isThereAnObjectInTheSession() && loginHandler.isThereALoginActionStored()) {
       Method methodOfAction = loginHandler.getMethodOfAction();
-      switch (methodOfAction.getAnnotation(Login.class).unauthorizedAction()) {
+
+      switch (methodOfAction.getAnnotation(Login.class).unauthorizedAction()) {      
         case RETURN_UNAUTHORIZED_STATUS:
           result.use(Results.http()).sendError(HttpServletResponse.SC_UNAUTHORIZED);
           break;
+  
         case REDIRECT_TO_LOGIN:
         default:
           Object instance = result.use(Results.logic()).redirectTo(loginHandler.getClassOfController());
