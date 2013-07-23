@@ -18,7 +18,7 @@ public class AuthenticationControl implements Serializable {
   private Logger logger = LoggerFactory.getLogger(AuthenticationControl.class);
 
   private Object object;
-  private HttpSession httpSession;
+  private transient HttpSession httpSession;
 
   public AuthenticationControl(HttpSession httpSession) {
     this.httpSession = httpSession;

@@ -78,11 +78,11 @@ public class LoginHandlerTest {
     fail("It didn't throw the expected exception.");
   }
 
-  @Test(expected = VraptorAuthenticationException.class)
-  public void testHandleAResourceWithoutALoginAction() {
-    handler.handle(ControllerWithoutLogin.class);
+  // @Test(expected = VraptorAuthenticationException.class)
+  // public void testHandleAResourceWithoutALoginAction() {
+  //   handler.handle(ControllerWithoutLogin.class);
 
-    fail("It didn't throw the expected exception.");
-  }
+  //   fail("It didn't throw the expected exception.");
+  // }
 
 }
