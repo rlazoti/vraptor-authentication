@@ -32,7 +32,7 @@ public class LoginHandler implements StereotypeHandler {
       searchForLoginActionAndStore(resource, method);
     }
 
-    ifThereIsNotAnyLoginActionThrowAnException();
+    //ifThereIsNotAnyLoginActionThrowAnException();
   }
 
   public Class<?> getClassOfController() {
