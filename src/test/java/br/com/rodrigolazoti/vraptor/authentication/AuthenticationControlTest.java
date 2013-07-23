@@ -7,6 +7,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
+import java.io.IOException;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
@@ -47,6 +50,16 @@ public class AuthenticationControlTest {
 
     assertFalse(authenticationControl.isThereAnObjectInTheSession());
     assertNull(authenticationControl.getObjectInTheSession());
+  }
+
+  @Test
+  public void testSerialization() throws IOException {
+    authenticationControl.createSession(object);
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+    oos.writeObject(authenticationControl);
   }
 
 }
